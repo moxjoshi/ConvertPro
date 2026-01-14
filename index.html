@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConvertPro - File Converter</title>
+    <meta name="description"
+        content="Fast, secure, and free online file converter. Convert PNG to JPEG, Images to PDF, and more directly in your browser.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
+    <link rel="icon" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+</head>
+
+<body>
+    <div class="background-globes">
+        <div class="globe globe-1"></div>
+        <div class="globe globe-2"></div>
+        <div class="globe globe-3"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="logo">Convert<span>Pro</span></div>
+        <div class="nav-links">
+            <a href="https://github.com/mokshjoshi-developer" target="_blank"><img src="/SVGs/github logo.svg"
+                    alt=""></a>
+            <a href="https://instagram.com/mokshjoshiii" target="_blank"><img src="/SVGs/instagram logo.svg" alt=""></a>
+            <a href="https://linkedin.com/in/mokshjoshi" target="_blank"><img src="/SVGs/linkedin logo.svg" alt=""></a>
+            <a href="https://github.com/mokshjoshi-developer" target="_blank" class="btn-primary small">Developer</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="hero">
+            <h1>Convert Files <span class="gradient-text">Instantly</span></h1>
+            <p class="subtitle">
+                Securely Made by <b>Moksh Joshi</b>
+            </p>
+        </section>
+
+        <section class="converter-app">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="img-converter">Image Converter</button>
+                <button class="tab-btn" data-tab="img-to-pdf">Image to PDF</button>
+                <button class="tab-btn" data-tab="pdf-to-img">PDF to Image</button>
+            </div>
+
+            <div class="converter-panel glass-panel">
+                <div id="img-converter" class="tab-content active">
+                    <div class="drop-zone" id="drop-zone-img">
+                        <div class="icon-cloud">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M7 10V9C7 6.23858 9.23858 4 12 4C14.7614 4 17 6.23858 17 9V10C19.2091 10 21 11.7909 21 14C21 16.2091 19.2091 18 17 18H7C4.79086 18 3 16.2091 3 14C3 11.7909 4.79086 10 7 10Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M12 10V15M12 10L9 13M12 10L15 13" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <h3>Drag & Drop images here</h3>
+                        <p>or</p>
+                        <button class="btn-secondary" onclick="document.getElementById('file-input-img').click()">Browse
+                            Files</button>
+                        <input type="file" id="file-input-img" accept="image/png, image/jpeg, image/jpg" multiple
+                            hidden>
+                        <p class="limit-text">Supports PNG, JPEG</p>
+                    </div>
+
+                    <div class="settings-area hidden" id="settings-img">
+                        <div class="setting-group">
+                            <label>Convert to:</label>
+                            <select id="format-select-img">
+                                <option value="jpeg">JPEG</option>
+                                <option value="png">PNG</option>
+                            </select>
+                        </div>
+                        <button id="convert-btn-img" class="btn-primary full-width">Convert Now</button>
+                    </div>
+                </div>
+
+                <div id="img-to-pdf" class="tab-content">
+                    <div class="drop-zone" id="drop-zone-pdf">
+                        <div class="icon-cloud">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="12" y1="18" x2="12" y2="12"></line>
+                                <line x1="9" y1="15" x2="15" y2="15"></line>
+                            </svg>
+                        </div>
+                        <h3>Drag & Drop images for PDF</h3>
+                        <p>or</p>
+                        <button class="btn-secondary" onclick="document.getElementById('file-input-pdf').click()">Browse
+                            Files</button>
+                        <input type="file" id="file-input-pdf" accept="image/png, image/jpeg, image/jpg" multiple
+                            hidden>
+                    </div>
+
+                    <div class="settings-area hidden" id="settings-pdf">
+                        <p id="pdf-file-count">0 files selected</p>
+                        <button id="convert-btn-pdf" class="btn-primary full-width">Generate PDF</button>
+                    </div>
+                </div>
+
+                <div id="pdf-to-img" class="tab-content">
+                    <div class="drop-zone" id="drop-zone-pdf-img">
+                        <div class="icon-cloud">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <rect x="8" y="12" width="8" height="6"></rect>
+                            </svg>
+                        </div>
+                        <h3>Drag & Drop PDF here</h3>
+                        <p>or</p>
+                        <button class="btn-secondary"
+                            onclick="document.getElementById('file-input-pdf-img').click()">Browse PDF</button>
+                        <input type="file" id="file-input-pdf-img" accept="application/pdf" hidden>
+                    </div>
+
+                    <div class="settings-area hidden" id="settings-pdf-img">
+                        <div class="setting-group">
+                            <label>Output Format:</label>
+                            <select id="format-select-pdf-img">
+                                <option value="jpeg">JPEG</option>
+                                <option value="png">PNG</option>
+                            </select>
+                        </div>
+                        <button id="convert-btn-pdf-img" class="btn-primary full-width">Extract Images</button>
+                    </div>
+                </div>
+
+                <div id="result-area" class="result-area hidden">
+                    <h3>Conversion Complete!</h3>
+                    <div id="download-links"></div>
+                    <button class="btn-text" id="reset-btn">Convert More</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="feature-card">
+                <div class="f-icon">⚡</div>
+                <h3>Lightning Fast</h3>
+                <p>Instant conversions powered by WebAssembly technology.</p>
+            </div>
+            <div class="feature-card">
+                <div class="f-icon">💎</div>
+                <h3>High Quality</h3>
+                <p>Preserve the quality of your documents and images.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Made with ❤️ by Moksh Joshi</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
